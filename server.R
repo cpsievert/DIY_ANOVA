@@ -459,12 +459,11 @@ shinyServer(function(input, output, session) {
       highchart(height = 200 * sqrt(length(by_categories))) %>%
         hc_chart(inverted = T) %>%
         hc_legend(enabled = F) %>%
-        hc_add_series_boxplot(
-          x = ..(response_transf()),
-          by = by,
-          colorByPoint = FALSE,
-          fillColor = "#c0d6e4",
-          outliers = FALSE
+        hc_add_series_list(
+          data_to_boxplot(
+            data.frame(x = ..(response_transf()), y = by),
+            x, y, add_outliers = TRUE
+          )
         ) %>%
         hc_xAxis(categories = by_categories) %>%
         hc_yAxis(title = list(text = ..(response()))) %>%
